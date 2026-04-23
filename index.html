@@ -551,11 +551,10 @@ const players = [
 ];
 
 const matches = [
-  {date:"13 Apr 2026",opposition:"Museum",score:"Lost 1-5",home_away:"Home",competition:"League",goals_for:1,goals_against:5},
-  {date:"20 Apr 2026",opposition:"Northbank",score:"Lost 1-6",home_away:"Away",competition:"League",goals_for:1,goals_against:6},
+  {date:"13 Apr 2026",opposition:"Museum",score:"Lost 5-1",home_away:"Home",competition:"League",goals_for:1,goals_against:5},
+  {date:"20 Apr 2026",opposition:"Northbank",score:"Lost 6-1",home_away:"Away",competition:"League",goals_for:1,goals_against:6},
   {date:"27 Apr 2026",opposition:"Northbank",score:"TBD",home_away:"Away",competition:"County Cup",goals_for:null,goals_against:null},
-  {date:"5 May 2026",opposition:"Silloth",score:"TBD",home_away:"Away",competition:"League",goals_for:null,goals_against:null},
-  {date:"11 May 2026",opposition:"AFC Carlisle",score:"TBD",home_away:"Home",competition:"League",goals_for:null,goals_against:null}
+  {date:"5 May 2026",opposition:"Silloth",score:"TBD",home_away:"Away",competition:"League",goals_for:null,goals_against:null}
 ];
 
 const totalGoals = players.reduce((s,p)=>s+p.goals,0);
@@ -584,27 +583,14 @@ const matchData = {
   "13 Apr 2026": {
     squad: ["Adrian Russell","Carl Stewart","Dave Martindale","Dean Metcalfe","Gary Jaques","Graham Atkinson","James Humphreys","Jamie Clague","John Allinson","Jude Hodson","Luke Sinclair","Paul Fraser","Ric Armstrong","Ryan Smith","Scott Sowerby","Tom Harding"],
     goalscorers: {"Luke Sinclair":1},
+    assisters: {"Jamie Clague":1},
     motm: "Jamie Clague"
   },
   "20 Apr 2026": {
     squad: ["Adrian Russell","Carl Stewart","Dave Martindale","Dean Metcalfe","Duncan Hall","Gary Jaques","James Humphreys","Jude Hodson","Lee Clarke","Luke Sinclair","Marcel McLean","Ric Armstrong","Rob Bamber","Ryan Smith","Scott Sowerby"],
     goalscorers: {"James Humphreys":1},
+    assisters: {"Luke Sinclair":1},
     motm: "James Humphreys"
-  },
-  "27 Apr 2026": {
-    squad: [],
-    goalscorers: {},
-    motm: null
-  },
-  "5 May 2026": {
-    squad: [],
-    goalscorers: {},
-    motm: null
-  },
-  "11 May 2026": {
-    squad: [],
-    goalscorers: {},
-    motm: null
   }
 };
 
@@ -621,6 +607,7 @@ document.getElementById("results-grid").innerHTML = matches.map(m=>{
   const data = matchData[m.date] || {};
   const squad = (data.squad || []).slice().sort((a,b)=>a.split(" ").pop().localeCompare(b.split(" ").pop()));
   const scorers = data.goalscorers || {};
+  const assisters = data.assisters || {};
   const motm = data.motm || null;
   const hasSquad = squad.length > 0;
   const squadId = "squad-"+m.date.replace(/ /g,"-");
@@ -631,11 +618,14 @@ document.getElementById("results-grid").innerHTML = matches.map(m=>{
       <div style="display:flex;flex-wrap:wrap;gap:5px;">
         ${squad.map(name=>{
           const goals = scorers[name] || 0;
+          const assists = assisters[name] || 0;
           const isMotm = motm === name;
           const extras = [];
           if(goals) extras.push(`⚽ ${goals}`);
+          if(assists) extras.push(`🅰️ ${assists}`);
           if(isMotm) extras.push("⭐ MoTM");
-          return `<span style="font-size:12px;padding:3px 9px;border-radius:2px;background:${isMotm?"#fff0ea":goals?"#f9f9f9":"var(--bg)"};color:${isMotm?"var(--orange)":goals?"var(--text)":"var(--muted)"};border:1px solid ${isMotm?"var(--orange-mid)":"var(--border)"};font-weight:${isMotm||goals?500:400};">${name}${extras.length?" — "+extras.join(" "):""}
+          const highlight = isMotm || goals || assists;
+          return `<span style="font-size:12px;padding:3px 9px;border-radius:2px;background:${isMotm?"#fff0ea":highlight?"#f9f9f9":"var(--bg)"};color:${isMotm?"var(--orange)":highlight?"var(--text)":"var(--muted)"};border:1px solid ${isMotm?"var(--orange-mid)":"var(--border)"};font-weight:${highlight?500:400};">${name}${extras.length?" — "+extras.join(" "):""}
           </span>`;
         }).join("")}
       </div>
