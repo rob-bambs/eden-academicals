@@ -409,7 +409,21 @@
 
   .player-table tr:last-child td { border-bottom: none; }
   .player-table tr:hover td { background: #fafafa; }
-  .player-name { font-weight: 500; }
+  .player-table th:first-child,
+  .player-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: inherit;
+    z-index: 1;
+  }
+
+  .player-table th:first-child {
+    background: var(--bg);
+  }
+
+  .player-table tr:hover td:first-child {
+    background: #fafafa;
+  }
 
   .stat-pill {
     display: inline-block;
