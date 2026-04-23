@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eden Academicals — Data Entry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #f04e00;
+    --orange-light: #fff0ea;
+    --orange-mid: #ffd5c2;
+    --bg: #f5f5f5;
+    --surface: #ffffff;
+    --border: #e8e8e8;
+    --border-strong: #d0d0d0;
+    --text: #111111;
+    --muted: #767676;
+    --subtle: #b0b0b0;
+    --red: #d62828;
+    --red-bg: #fff0f0;
+    --yellow: #d97700;
+    --yellow-bg: #fff8eb;
+    --green: #1a7f4b;
+    --green-bg: #edfaf3;
+    --purple: #5b21b6;
+    --purple-bg: #f3f0ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .app-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--orange);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .app-header h1 span { color: var(--orange); }
+
+  .app-header .sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-left: auto;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    gap: 0;
+  }
+
+  .nav-tab {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .nav-tab.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+  }
+
+  .nav-tab:hover:not(.active) { color: var(--text); }
+
+  /* WRAPPER */
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+  }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title .count {
+    font-size: 11px;
+    background: var(--bg);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  /* FORM FIELDS */
+  .field-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  input[type=text], input[type=date], input[type=number], select {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .btn-secondary:hover { background: var(--bg); }
+
+  .btn-danger {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid rgba(214,40,40,0.2);
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* MATCH LIST */
+  .match-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .match-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .match-opp { font-weight: 600; font-size: 14px; }
+  .match-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .comp-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .comp-League { background: #e8f0fe; color: #1a56db; }
+  .comp-League-Cup { background: var(--orange-light); color: var(--orange); }
+  .comp-County-Cup { background: var(--green-bg); color: var(--green); }
+
+  .result-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .result-won { background: var(--green-bg); color: var(--green); }
+  .result-lost { background: var(--red-bg); color: var(--red); }
+  .result-drew { background: var(--yellow-bg); color: var(--yellow); }
+  .result-tbd { background: var(--bg); color: var(--subtle); border: 1px solid var(--border); }
+
+  /* MATCH EDITOR */
+  .editor-card {
+    background: var(--orange-light);
+    border: 1px solid var(--orange-mid);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .editor-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* MATCH TABS */
+  .match-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .match-tab {
+    padding: 7px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    color: var(--muted);
+    transition: all 0.12s;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .match-tab .tab-date { font-size: 10px; color: var(--subtle); display: block; margin-top: 2px; }
+  .match-tab.active { border-color: var(--orange); color: var(--orange); background: var(--orange-light); }
+
+  /* PLAYER GRID */
+  .player-grid-header {
+    display: grid;
+    grid-template-columns: 1fr 44px 44px 44px 44px 44px 44px 44px;
+    gap: 5px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+
+  .col-c { text-align: center; }
+
+  .player-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 44px 44px 44px 44px 44px 44px 44px;
+    gap: 5px;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
+    transition: background 0.1s, border-color 0.1s;
+  }
+
+  .player-row-grid.played-row {
+    background: #fafffe;
+    border-color: rgba(26,127,75,0.15);
+  }
+
+  .player-row-grid:not(.played-row) { background: var(--bg); }
+
+  .player-name-cell {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-row-grid:not(.played-row) .player-name-cell { color: var(--subtle); font-weight: 400; }
+
+  .played-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .played-check input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--orange);
+  }
+
+  .player-row-grid input[type=number] {
+    text-align: center;
+    padding: 5px 2px;
+    width: 100%;
+    min-width: 0;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+
+  /* TOTALS TABLE */
+  .totals-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .totals-table th {
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .totals-table th:not(:first-child) { text-align: center; }
+
+  .totals-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .totals-table td:not(:first-child) { text-align: center; }
+  .totals-table tr:last-child td { border-bottom: none; }
+  .totals-table tr:hover td { background: #fafafa; }
+
+  .stat-chip {
+    display: inline-block;
+    min-width: 22px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .chip-goal { background: var(--orange-light); color: var(--orange); }
+  .chip-assist { background: var(--yellow-bg); color: var(--yellow); }
+  .chip-yc { background: var(--yellow-bg); color: var(--yellow); }
+  .chip-rc { background: var(--red-bg); color: var(--red); }
+  .chip-sb { background: var(--purple-bg); color: var(--purple); }
+  .chip-motm { background: var(--bg); color: var(--text); }
+  .chip-zero { color: var(--subtle); font-weight: 400; font-size: 12px; }
+
+  /* EXPORT */
+  .export-block { margin-bottom: 20px; }
+
+  .export-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .export-step {
+    width: 20px; height: 20px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .export-box {
+    background: #1a1a1a;
+    color: #a8d8a8;
+    border-radius: 4px;
+    padding: 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    white-space: pre-wrap;
+    max-height: 180px;
+    overflow-y: auto;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .export-instruction {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 4px;
+    border-left: 3px solid var(--orange);
+    margin-bottom: 16px;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* INFO NOTE */
+  .info-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .match-row { grid-template-columns: 1fr auto auto; }
+    .match-row .result-badge { display: none; }
+    .player-grid-header, .player-row-grid { grid-template-columns: 1fr 36px 36px 36px 36px 36px 36px 36px; gap: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>Eden <span>Academicals</span></h1>
+  <span class="sub">Data Entry</span>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('matches',this)">Matches</button>
+  <button class="nav-tab" onclick="showSection('players',this)">Player Stats</button>
+  <button class="nav-tab" onclick="showSection('totals',this)">Totals</button>
+  <button class="nav-tab" onclick="showSection('export',this)">Export</button>
+</div>
+
+<div class="wrapper">
+
+  <!-- ===== MATCHES ===== -->
+  <div class="section active" id="sec-matches">
+    <div class="card">
+      <div class="card-title">Season Fixtures <span class="count" id="fixture-count">0 fixtures</span></div>
+      <div class="match-list" id="matches-list"></div>
+    </div>
+
+    <div class="editor-card" id="match-editor" style="display:none;">
+      <div class="editor-title">
+        <span id="match-editor-title">Edit Match</span>
+        <button class="btn-secondary" style="padding:5px 12px;font-size:11px;" onclick="closeMatchEditor()">✕ Close</button>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Competition</label>
+          <select id="me-comp">
+            <option>League</option>
+            <option>League Cup</option>
+            <option>County Cup</option>
+          </select>
+        </div>
+        <div class="field"><label>Goals For</label><input type="number" min="0" id="me-gf" value="0"></div>
+        <div class="field"><label>Goals Against</label><input type="number" min="0" id="me-ga" value="0"></div>
+        <div class="field">
+          <label>Result</label>
+          <select id="me-result">
+            <option value="TBD">TBD — not played yet</option>
+            <option value="Won">Won</option>
+            <option value="Drew">Drew</option>
+            <option value="Lost">Lost</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn-primary" onclick="saveMatch()">Save Result</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Add New Fixture</div>
+      <div class="field-row">
+        <div class="field"><label>Date</label><input type="date" id="new-date"></div>
+        <div class="field"><label>Opposition</label><input type="text" id="new-opp" placeholder="Team name"></div>
+        <div class="field">
+          <label>Home / Away</label>
+          <select id="new-ha"><option>Home</option><option>Away</option></select>
+        </div>
+        <div class="field">
+          <label>Competition</label>
+          <select id="new-comp"><option>League</option><option>League Cup</option><option>County Cup</option></select>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn-primary" onclick="addMatch()">Add Fixture</button></div>
+    </div>
+  </div>
+
+  <!-- ===== PLAYER STATS ===== -->
+  <div class="section" id="sec-players">
+    <div class="card">
+      <div class="card-title">Select Match</div>
+      <div class="match-tabs" id="match-tabs"></div>
+    </div>
+    <div class="card" id="stats-card">
+      <div class="card-title">
+        <span id="stats-match-title">Player Stats</span>
+        <span style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0;text-transform:none;" id="played-count"></span>
+      </div>
+      <div class="player-grid-header">
+        <div>Player</div>
+        <div class="col-c">Played</div>
+        <div class="col-c">Goals</div>
+        <div class="col-c">Assists</div>
+        <div class="col-c">YC</div>
+        <div class="col-c">RC</div>
+        <div class="col-c">SB</div>
+        <div class="col-c">MoTM</div>
+      </div>
+      <div id="player-rows"></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="savePlayerStats()">Save Stats</button>
+        <button class="btn-danger" onclick="clearMatchStats()">Clear Match</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOTALS ===== -->
+  <div class="section" id="sec-totals">
+    <div class="card">
+      <div class="card-title">Season Totals</div>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table class="totals-table" id="totals-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Apps</th>
+              <th>Goals</th>
+              <th>Assists</th>
+              <th>YC</th>
+              <th>RC</th>
+              <th>SB</th>
+              <th>MoTM</th>
+            </tr>
+          </thead>
+          <tbody id="totals-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EXPORT ===== -->
+  <div class="section" id="sec-export">
+    <div class="card">
+      <div class="card-title">Export to Dashboard</div>
+      <div class="export-instruction">
+        Generate the three data blocks below, then paste each one into <strong>eden-academicals-dashboard.html</strong> replacing the matching section.
+      </div>
+      <div class="btn-row" style="margin-top:0;">
+        <button class="btn-primary" onclick="generateExport()">Generate Export</button>
+      </div>
+
+      <div id="export-output" style="display:none;">
+        <div class="divider"></div>
+
+        <div class="export-block">
+          <div class="export-label"><span class="export-step">1</span> Replace <code style="font-family:monospace;background:var(--bg);padding:2px 6px;border-radius:3px;font-size:11px;">const players = [...]</code></div>
+          <div class="export-box" id="export-players"></div>
+          <button class="btn-secondary" onclick="copyExport('export-players')">Copy Block</button>
+        </div>
+
+        <div class="export-block">
+          <div class="export-label"><span class="export-step">2</span> Replace <code style="font-family:monospace;background:var(--bg);padding:2px 6px;border-radius:3px;font-size:11px;">const matches = [...]</code></div>
+          <div class="export-box" id="export-matches"></div>
+          <button class="btn-secondary" onclick="copyExport('export-matches')">Copy Block</button>
+        </div>
+
+        <div class="export-block">
+          <div class="export-label"><span class="export-step">3</span> Replace <code style="font-family:monospace;background:var(--bg);padding:2px 6px;border-radius:3px;font-size:11px;">const matchData = {...}</code></div>
+          <div class="export-box" id="export-matchdata"></div>
+          <button class="btn-secondary" onclick="copyExport('export-matchdata')">Copy Block</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Manage Squad</div>
+      <div class="field-row">
+        <div class="field" style="flex:2"><label>Add New Player</label><input type="text" id="new-player" placeholder="Full name"></div>
+        <div class="field" style="align-self:flex-end;"><button class="btn-primary" onclick="addPlayer()">Add Player</button></div>
+      </div>
+      <div class="divider"></div>
+      <div class="card-title" style="border:none;padding:0;margin-bottom:10px;">Current Squad</div>
+      <div id="squad-list" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PLAYERS_KEY='ea-players', MATCHES_KEY='ea-matches', STATS_KEY='ea-match-stats';
+
+const DEFAULT_PLAYERS = [
+  "Adrian Russell","Andy Reilly","Carl Stewart","Dave Martindale","Dean Metcalfe",
+  "Duncan Hall","Gary Jaques","Graham Atkinson","James Humphreys","Jamie Clague",
+  "John Allinson","Jude Hodson","Lee Clarke","Llew Gibbs","Luke Sinclair",
+  "Marcel McLean","Michal Badocha","Nick Barker","Paul Fraser","Ric Armstrong",
+  "Rob Bamber","Rob Bland","Ryan Smith","Scott Sowerby","Stu Forrester",
+  "Tim Jackson","Tom Harding"
+];
+
+const DEFAULT_MATCHES = [
+  {id:'m1',date:'2026-04-13',opposition:'Museum',home_away:'Home',competition:'League',goals_for:1,goals_against:5,result:'Lost'},
+  {id:'m2',date:'2026-04-20',opposition:'Northbank',home_away:'Away',competition:'League',goals_for:1,goals_against:6,result:'Lost'},
+  {id:'m3',date:'2026-04-27',opposition:'Northbank',home_away:'Away',competition:'County Cup',goals_for:null,goals_against:null,result:'TBD'},
+  {id:'m4',date:'2026-05-05',opposition:'Silloth',home_away:'Away',competition:'League',goals_for:null,goals_against:null,result:'TBD'}
+];
+
+function ps(played,goals=0,assists=0,yc=0,rc=0,sb=0,motm=0){return{played,goals,assists,yc,rc,sb,motm};}
+
+const DEFAULT_STATS = {
+  m1:{
+    'Adrian Russell':ps(true),'Carl Stewart':ps(true),'Dave Martindale':ps(true),
+    'Dean Metcalfe':ps(true),'Gary Jaques':ps(true),'Graham Atkinson':ps(true),
+    'James Humphreys':ps(true),'Jamie Clague':ps(true,0,1,0,0,0,1),
+    'John Allinson':ps(true),'Jude Hodson':ps(true),'Luke Sinclair':ps(true,1),
+    'Paul Fraser':ps(true),'Ric Armstrong':ps(true),'Ryan Smith':ps(true),
+    'Scott Sowerby':ps(true),'Tom Harding':ps(true)
+  },
+  m2:{
+    'Adrian Russell':ps(true),'Carl Stewart':ps(true),'Dave Martindale':ps(true),
+    'Dean Metcalfe':ps(true),'Duncan Hall':ps(true),'Gary Jaques':ps(true),
+    'James Humphreys':ps(true,1,0,0,0,0,1),'Jude Hodson':ps(true),
+    'Lee Clarke':ps(true),'Luke Sinclair':ps(true,0,1),'Marcel McLean':ps(true),
+    'Ric Armstrong':ps(true),'Rob Bamber':ps(true),'Ryan Smith':ps(true),
+    'Scott Sowerby':ps(true)
+  }
+};
+
+let players = JSON.parse(localStorage.getItem(PLAYERS_KEY)||'null') || [...DEFAULT_PLAYERS];
+let matches = JSON.parse(localStorage.getItem(MATCHES_KEY)||'null') || JSON.parse(JSON.stringify(DEFAULT_MATCHES));
+let matchStats = JSON.parse(localStorage.getItem(STATS_KEY)||'null') || JSON.parse(JSON.stringify(DEFAULT_STATS));
+let activeMatchId = matches[0]?.id;
+let editingMatchIdx = null;
+
+function save(){
+  localStorage.setItem(PLAYERS_KEY,JSON.stringify(players));
+  localStorage.setItem(MATCHES_KEY,JSON.stringify(matches));
+  localStorage.setItem(STATS_KEY,JSON.stringify(matchStats));
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='players') renderPlayerSection();
+  if(id==='matches') renderMatchesList();
+  if(id==='totals') renderTotals();
+  if(id==='export') renderSquadList();
+}
+
+function fmtDate(d){
+  if(!d) return '';
+  return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function scoreStr(m){
+  if(m.result==='TBD'||m.goals_for===null) return 'TBD';
+  return `${m.result} ${m.goals_for}-${m.goals_against}`;
+}
+
+function resultBadge(m){
+  const s=scoreStr(m);
+  const cls = m.result==='Won'?'result-won':m.result==='Lost'?'result-lost':m.result==='Drew'?'result-drew':'result-tbd';
+  return `<span class="result-badge ${cls}">${s}</span>`;
+}
+
+function compBadge(c){
+  const cls = c==='League'?'comp-League':c==='League Cup'?'comp-League-Cup':'comp-County-Cup';
+  return `<span class="comp-badge ${cls}">${c}</span>`;
+}
+
+function renderMatchesList(){
+  document.getElementById('fixture-count').textContent = `${matches.length} fixture${matches.length!==1?'s':''}`;
+  document.getElementById('matches-list').innerHTML = matches.map((m,i)=>`
+    <div class="match-row">
+      <div>
+        <div class="match-opp">${m.opposition}</div>
+        <div class="match-meta">${fmtDate(m.date)} · ${m.home_away}</div>
+      </div>
+      ${compBadge(m.competition)}
+      ${resultBadge(m)}
+      <button class="btn-secondary" style="padding:6px 14px;font-size:11px;white-space:nowrap;" onclick="openMatchEditor(${i})">Edit</button>
+    </div>`).join('');
+}
+
+function openMatchEditor(idx){
+  editingMatchIdx=idx;
+  const m=matches[idx];
+  document.getElementById('match-editor-title').textContent=`Editing: ${m.opposition} — ${fmtDate(m.date)}`;
+  document.getElementById('me-comp').value=m.competition||'League';
+  document.getElementById('me-gf').value=m.goals_for??0;
+  document.getElementById('me-ga').value=m.goals_against??0;
+  document.getElementById('me-result').value=m.result||'TBD';
+  document.getElementById('match-editor').style.display='block';
+  document.getElementById('match-editor').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function closeMatchEditor(){
+  document.getElementById('match-editor').style.display='none';
+  editingMatchIdx=null;
+}
+
+function saveMatch(){
+  if(editingMatchIdx===null) return;
+  const gf=parseInt(document.getElementById('me-gf').value)||0;
+  const ga=parseInt(document.getElementById('me-ga').value)||0;
+  const res=document.getElementById('me-result').value;
+  const comp=document.getElementById('me-comp').value;
+  matches[editingMatchIdx].competition=comp;
+  matches[editingMatchIdx].goals_for=res==='TBD'?null:gf;
+  matches[editingMatchIdx].goals_against=res==='TBD'?null:ga;
+  matches[editingMatchIdx].result=res;
+  save(); renderMatchesList(); closeMatchEditor(); toast('✓ Match saved');
+}
+
+function addMatch(){
+  const date=document.getElementById('new-date').value;
+  const opp=document.getElementById('new-opp').value.trim();
+  const ha=document.getElementById('new-ha').value;
+  const comp=document.getElementById('new-comp').value;
+  if(!date||!opp){toast('Please enter a date and opposition');return;}
+  matches.push({id:'m'+Date.now(),date,opposition:opp,home_away:ha,competition:comp,goals_for:null,goals_against:null,result:'TBD'});
+  save();
+  document.getElementById('new-date').value='';
+  document.getElementById('new-opp').value='';
+  renderMatchesList(); toast('✓ Fixture added');
+}
+
+function renderMatchTabs(){
+  document.getElementById('match-tabs').innerHTML=matches.map(m=>`
+    <button class="match-tab ${m.id===activeMatchId?'active':''}" onclick="selectMatch('${m.id}',this)">
+      ${m.opposition}
+      <span class="tab-date">${fmtDate(m.date)}</span>
+    </button>`).join('');
+}
+
+function selectMatch(id,btn){
+  activeMatchId=id;
+  document.querySelectorAll('.match-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlayerRows();
+}
+
+function renderPlayerRows(){
+  const m=matches.find(m=>m.id===activeMatchId);
+  if(m) document.getElementById('stats-match-title').textContent=`${m.opposition} — ${fmtDate(m.date)}`;
+  const stats=matchStats[activeMatchId]||{};
+  const playedCount=Object.values(stats).filter(s=>s.played).length;
+  document.getElementById('played-count').textContent=playedCount>0?`${playedCount} played`:'';
+
+  document.getElementById('player-rows').innerHTML=players.map(name=>{
+    const s=stats[name]||{played:false,goals:0,assists:0,yc:0,rc:0,sb:0,motm:0};
+    const op=s.played?1:0.35; const dis=s.played?'':'disabled';
+    return `<div class="player-row-grid ${s.played?'played-row':''}">
+      <div class="player-name-cell">${name}</div>
+      <div class="played-check"><input type="checkbox" data-player="${name}" data-field="played" ${s.played?'checked':''} onchange="togglePlayed('${name}',this)"></div>
+      <input type="number" min="0" max="20" value="${s.goals||0}" data-player="${name}" data-field="goals" ${dis} style="opacity:${op}">
+      <input type="number" min="0" max="20" value="${s.assists||0}" data-player="${name}" data-field="assists" ${dis} style="opacity:${op}">
+      <input type="number" min="0" max="5" value="${s.yc||0}" data-player="${name}" data-field="yc" ${dis} style="opacity:${op}">
+      <input type="number" min="0" max="1" value="${s.rc||0}" data-player="${name}" data-field="rc" ${dis} style="opacity:${op}">
+      <input type="number" min="0" max="5" value="${s.sb||0}" data-player="${name}" data-field="sb" ${dis} style="opacity:${op}">
+      <input type="number" min="0" max="1" value="${s.motm||0}" data-player="${name}" data-field="motm" ${dis} style="opacity:${op}">
+    </div>`;
+  }).join('');
+}
+
+function togglePlayed(name,cb){
+  if(!matchStats[activeMatchId]) matchStats[activeMatchId]={};
+  if(!matchStats[activeMatchId][name]) matchStats[activeMatchId][name]={played:false,goals:0,assists:0,yc:0,rc:0,sb:0,motm:0};
+  matchStats[activeMatchId][name].played=cb.checked;
+  renderPlayerRows();
+}
+
+function savePlayerStats(){
+  if(!matchStats[activeMatchId]) matchStats[activeMatchId]={};
+  document.querySelectorAll('#player-rows .player-row-grid').forEach(row=>{
+    const name=row.querySelector('[data-field="played"]').dataset.player;
+    const played=row.querySelector('[data-field="played"]').checked;
+    const goals=parseInt(row.querySelector('[data-field="goals"]').value)||0;
+    const assists=parseInt(row.querySelector('[data-field="assists"]').value)||0;
+    const yc=parseInt(row.querySelector('[data-field="yc"]').value)||0;
+    const rc=parseInt(row.querySelector('[data-field="rc"]').value)||0;
+    const sb=parseInt(row.querySelector('[data-field="sb"]').value)||0;
+    const motm=parseInt(row.querySelector('[data-field="motm"]').value)||0;
+    if(played||goals||assists||yc||rc||sb||motm){
+      matchStats[activeMatchId][name]={played,goals,assists,yc,rc,sb,motm};
+    }
+  });
+  save(); renderPlayerRows(); toast('✓ Stats saved');
+}
+
+function clearMatchStats(){
+  if(!confirm('Clear all stats for this match?')) return;
+  matchStats[activeMatchId]={}; save(); renderPlayerRows(); toast('Stats cleared');
+}
+
+function getPlayerTotals(){
+  return players.map(name=>{
+    let apps=0,goals=0,assists=0,yc=0,rc=0,sb=0,motm=0;
+    matches.forEach(m=>{
+      const s=(matchStats[m.id]||{})[name];
+      if(s&&s.played){apps++;goals+=s.goals||0;assists+=s.assists||0;yc+=s.yc||0;rc+=s.rc||0;sb+=s.sb||0;motm+=s.motm||0;}
+    });
+    return {name,apps,goals,assists,yellow_cards:yc,red_cards:rc,sin_bin:sb,motm};
+  });
+}
+
+function chip(val,cls){
+  if(!val) return `<span class="chip-zero">—</span>`;
+  return `<span class="stat-chip ${cls}">${val}</span>`;
+}
+
+function renderTotals(){
+  const totals=getPlayerTotals().filter(p=>p.apps>0).sort((a,b)=>b.apps-a.apps||b.goals-a.goals);
+  document.getElementById('totals-body').innerHTML=totals.map(p=>`
+    <tr>
+      <td style="font-weight:500">${p.name}</td>
+      <td>${chip(p.apps,'chip-motm')}</td>
+      <td>${chip(p.goals,'chip-goal')}</td>
+      <td>${chip(p.assists,'chip-assist')}</td>
+      <td>${chip(p.yellow_cards,'chip-yc')}</td>
+      <td>${chip(p.red_cards,'chip-rc')}</td>
+      <td>${chip(p.sin_bin,'chip-sb')}</td>
+      <td>${chip(p.motm,'chip-motm')}</td>
+    </tr>`).join('')||`<tr><td colspan="8" style="padding:1rem;color:var(--muted);text-align:center;">No appearances recorded yet</td></tr>`;
+}
+
+function renderPlayerSection(){ renderMatchTabs(); renderPlayerRows(); }
+
+function renderSquadList(){
+  document.getElementById('squad-list').innerHTML=players.map(name=>`
+    <span style="font-size:12px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--text);">${name}</span>`).join('');
+}
+
+function addPlayer(){
+  const name=document.getElementById('new-player').value.trim();
+  if(!name) return;
+  if(players.includes(name)){toast('Player already in squad');return;}
+  players.push(name); save();
+  document.getElementById('new-player').value='';
+  renderSquadList();
+  toast(`✓ ${name} added`);
+}
+
+function generateExport(){
+  const totals=getPlayerTotals();
+
+  document.getElementById('export-players').textContent='const players = [\n'+
+    totals.map(p=>`  {name:"${p.name}",goals:${p.goals},assists:${p.assists},yellow_cards:${p.yellow_cards},red_cards:${p.red_cards},sin_bin:${p.sin_bin},motm:${p.motm},appearances:${p.apps}}`).join(',\n')+'\n];';
+
+  document.getElementById('export-matches').textContent='const matches = [\n'+
+    matches.map(m=>{
+      const score=m.result==='TBD'?'TBD':`${m.result} ${m.goals_for}-${m.goals_against}`;
+      return `  {date:"${fmtDate(m.date)}",opposition:"${m.opposition}",score:"${score}",home_away:"${m.home_away}",competition:"${m.competition}",goals_for:${m.goals_for??'null'},goals_against:${m.goals_against??'null'}}`;
+    }).join(',\n')+'\n];';
+
+  const matchDataLines=matches.map(m=>{
+    const stats=matchStats[m.id]||{};
+    const squad=Object.entries(stats).filter(([,s])=>s.played).map(([n])=>n);
+    const goalscorers={};
+    Object.entries(stats).forEach(([n,s])=>{if(s.played&&s.goals>0) goalscorers[n]=s.goals;});
+    const motmEntry=Object.entries(stats).find(([,s])=>s.played&&s.motm>0);
+    const motm=motmEntry?motmEntry[0]:null;
+    const squadStr=squad.map(n=>`"${n}"`).join(',');
+    const scorersStr=Object.entries(goalscorers).map(([n,g])=>`"${n}":${g}`).join(',');
+    const motmStr=motm?`"${motm}"`:null;
+    return `  "${fmtDate(m.date)}": {\n    squad: [${squadStr}],\n    goalscorers: {${scorersStr}},\n    motm: ${motmStr}\n  }`;
+  });
+  document.getElementById('export-matchdata').textContent='const matchData = {\n'+matchDataLines.join(',\n')+'\n};';
+
+  document.getElementById('export-output').style.display='block';
+  toast('✓ Export generated');
+}
+
+function copyExport(id){
+  navigator.clipboard.writeText(document.getElementById(id).textContent)
+    .then(()=>toast('✓ Copied to clipboard!'))
+    .catch(()=>{
+      const el=document.getElementById(id);
+      const range=document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      toast('✓ Copied!');
+    });
+}
+
+// Init
+renderMatchesList();
+</script>
+</body>
+</html>
