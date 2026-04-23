@@ -585,7 +585,11 @@ document.getElementById("results-grid").innerHTML = matches.map(m=>{
   if(m.score.startsWith("Won")) cls="won";
   else if(m.score.startsWith("Lost")) cls="";
   const compClass = m.competition==="League" ? "comp-league" : m.competition==="League Cup" ? "comp-leaguecup" : "comp-countycup";
-  const squad = matchSquads[m.date] || [];
+  const squad = (matchSquads[m.date] || []).slice().sort((a,b)=>{
+    const surnameA = a.split(" ").pop();
+    const surnameB = b.split(" ").pop();
+    return surnameA.localeCompare(surnameB);
+  });
   const scorers = matchGoalscorers[m.date] || {};
   const motm = matchMotm[m.date] || null;
   const hasSquad = squad.length > 0;
