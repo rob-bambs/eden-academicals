@@ -189,6 +189,7 @@
   }
 
   .result-card:hover { background: #fafafa; }
+  .result-card-clickable:hover { background: #fff6f2; }
 
   .result-date {
     font-size: 10px;
@@ -461,6 +462,10 @@
       <div class="chart-title">Squad Discipline</div>
       <div style="position:relative;height:210px"><canvas id="disciplineChart"></canvas></div>
     </div>
+    <div class="chart-card full">
+      <div class="chart-title">Man of the Match Awards</div>
+      <div style="position:relative;height:220px"><canvas id="motmChart"></canvas></div>
+    </div>
   </div>
 
   <div class="section-title">Squad Appearances</div>
@@ -555,19 +560,63 @@ document.getElementById("kpi-row").innerHTML = kpis.map(k=>`
     <div class="kpi-label">${k.label}</div>
   </div>`).join("");
 
+const matchSquads = {
+  "13 Apr 2026": ["Adrian Russell","Carl Stewart","Dave Martindale","Dean Metcalfe","Duncan Hall","Gary Jaques","James Humphreys","Jamie Clague","John Allinson","Jude Hodson","Luke Sinclair","Paul Fraser","Ric Armstrong","Ryan Smith","Scott Sowerby","Tom Harding"],
+  "20 Apr 2026": ["Adrian Russell","Carl Stewart","Dave Martindale","Dean Metcalfe","Gary Jaques","Graham Atkinson","James Humphreys","Jude Hodson","Lee Clarke","Luke Sinclair","Marcel McLean","Ric Armstrong","Rob Bamber","Ryan Smith","Scott Sowerby"]
+};
+
+const matchGoalscorers = {
+  "13 Apr 2026": {"Luke Sinclair":1},
+  "20 Apr 2026": {"James Humphreys":1}
+};
+
+const matchMotm = {
+  "13 Apr 2026": "Jamie Clague",
+  "20 Apr 2026": "James Humphreys"
+};
+
+function toggleSquad(date) {
+  const el = document.getElementById("squad-"+date.replace(/ /g,"-"));
+  if(el) el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
 document.getElementById("results-grid").innerHTML = matches.map(m=>{
   let cls = "tbd";
   if(m.score.startsWith("Won")) cls="won";
   else if(m.score.startsWith("Lost")) cls="";
   const compClass = m.competition==="League" ? "comp-league" : m.competition==="League Cup" ? "comp-leaguecup" : "comp-countycup";
-  return `<div class="result-card">
+  const squad = matchSquads[m.date] || [];
+  const scorers = matchGoalscorers[m.date] || {};
+  const motm = matchMotm[m.date] || null;
+  const hasSquad = squad.length > 0;
+  const squadId = "squad-"+m.date.replace(/ /g,"-");
+
+  const squadHTML = hasSquad ? `
+    <div id="${squadId}" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;">Squad (${squad.length})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        ${squad.map(name=>{
+          const goals = scorers[name] || 0;
+          const isMotm = motm === name;
+          const extras = [];
+          if(goals) extras.push(`⚽ ${goals}`);
+          if(isMotm) extras.push("⭐ MoTM");
+          return `<span style="font-size:12px;padding:3px 9px;border-radius:2px;background:${isMotm?"#fff0ea":goals?"#f9f9f9":"var(--bg)"};color:${isMotm?"var(--orange)":goals?"var(--text)":"var(--muted)"};border:1px solid ${isMotm?"var(--orange-mid)":"var(--border)"};font-weight:${isMotm||goals?500:400};">${name}${extras.length?" — "+extras.join(" "):""}
+          </span>`;
+        }).join("")}
+      </div>
+    </div>` : "";
+
+  return `<div class="result-card ${hasSquad?"result-card-clickable":""}" ${hasSquad?`onclick="toggleSquad('${m.date}')" style="cursor:pointer;"`:""}">
     <span class="comp-badge ${compClass}">${m.competition}</span>
     <div class="result-date">${m.date}</div>
     <div class="result-opp">${m.opposition}</div>
     <div class="result-meta">
       <span class="result-score ${cls}">${m.score}</span>
       <span class="result-location">${m.home_away}</span>
+      ${hasSquad ? `<span style="font-size:10px;color:var(--subtle);letter-spacing:1px;text-transform:uppercase;font-weight:600;">Tap for squad ↓</span>` : ""}
     </div>
+    ${squadHTML}
   </div>`;
 }).join("");
 
@@ -621,6 +670,27 @@ new Chart(document.getElementById("disciplineChart"), {
     }]
   },
   options:{...chartDefaults, plugins:{legend:{position:"bottom",labels:{color:tickColor,font:{family:fontFamily,size:11},padding:16}}}, cutout:"68%"}
+});
+
+const motmPlayers = [...players].filter(p=>p.motm>0).sort((a,b)=>b.motm-a.motm);
+new Chart(document.getElementById("motmChart"), {
+  type:"bar",
+  data:{
+    labels: motmPlayers.length ? motmPlayers.map(p=>p.name.split(" ").pop()) : ["No awards yet"],
+    datasets:[{
+      label:"MoTM Awards",
+      data: motmPlayers.length ? motmPlayers.map(p=>p.motm) : [0],
+      backgroundColor:"#f04e00",
+      borderRadius:3,
+    }]
+  },
+  options:{...chartDefaults,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:tickColor},grid:{color:gridColor}},
+      y:{ticks:{color:tickColor,stepSize:1},grid:{color:gridColor},beginAtZero:true}
+    }
+  }
 });
 
 const sorted = [...players].filter(p=>p.appearances>0).sort((a,b)=>b.appearances-a.appearances);
