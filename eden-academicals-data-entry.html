@@ -987,13 +987,18 @@ function generateExport(){
     const stats=matchStats[m.id]||{};
     const squad=Object.entries(stats).filter(([,s])=>s.played).map(([n])=>n);
     const goalscorers={};
-    Object.entries(stats).forEach(([n,s])=>{if(s.played&&s.goals>0) goalscorers[n]=s.goals;});
+    const assisters={};
+    Object.entries(stats).forEach(([n,s])=>{
+      if(s.played&&s.goals>0) goalscorers[n]=s.goals;
+      if(s.played&&s.assists>0) assisters[n]=s.assists;
+    });
     const motmEntry=Object.entries(stats).find(([,s])=>s.played&&s.motm>0);
     const motm=motmEntry?motmEntry[0]:null;
     const squadStr=squad.map(n=>`"${n}"`).join(',');
     const scorersStr=Object.entries(goalscorers).map(([n,g])=>`"${n}":${g}`).join(',');
+    const assistsStr=Object.entries(assisters).map(([n,a])=>`"${n}":${a}`).join(',');
     const motmStr=motm?`"${motm}"`:null;
-    return `  "${fmtDate(m.date)}": {\n    squad: [${squadStr}],\n    goalscorers: {${scorersStr}},\n    motm: ${motmStr}\n  }`;
+    return `  "${fmtDate(m.date)}": {\n    squad: [${squadStr}],\n    goalscorers: {${scorersStr}},\n    assisters: {${assistsStr}},\n    motm: ${motmStr}\n  }`;
   });
   document.getElementById('export-matchdata').textContent='const matchData = {\n'+matchDataLines.join(',\n')+'\n};';
 
