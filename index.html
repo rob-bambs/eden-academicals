@@ -522,38 +522,39 @@
 <script>
 const players = [
   {name:"Adrian Russell",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Andy Reilly",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
+  {name:"Andy Reilly",goals:0,assists:1,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
   {name:"Carl Stewart",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Dave Martindale",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Dean Metcalfe",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Dave Martindale",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:3},
+  {name:"Dean Metcalfe",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:3},
   {name:"Duncan Hall",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
-  {name:"Gary Jaques",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Gary Jaques",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:3},
   {name:"Graham Atkinson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
-  {name:"James Humphreys",goals:1,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:1,appearances:2},
+  {name:"James Humphreys",goals:1,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:1,appearances:3},
   {name:"Jamie Clague",goals:0,assists:1,yellow_cards:0,red_cards:0,sin_bin:0,motm:1,appearances:1},
-  {name:"John Allinson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
-  {name:"Jude Hodson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Lee Clarke",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
-  {name:"Llew Gibbs",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
-  {name:"Luke Sinclair",goals:1,assists:1,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Marcel McLean",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
+  {name:"John Allinson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Jude Hodson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:3},
+  {name:"Lee Clarke",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Llew Gibbs",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
+  {name:"Luke Sinclair",goals:1,assists:1,yellow_cards:0,red_cards:0,sin_bin:0,motm:1,appearances:3},
+  {name:"Marcel McLean",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
   {name:"Michal Badocha",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
   {name:"Nick Barker",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
-  {name:"Paul Fraser",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
-  {name:"Ric Armstrong",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Paul Fraser",goals:1,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
+  {name:"Ric Armstrong",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:3},
   {name:"Rob Bamber",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
   {name:"Rob Bland",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
   {name:"Ryan Smith",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
   {name:"Scott Sowerby",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2},
-  {name:"Stu Forrester",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
+  {name:"Stu Forrester",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1},
   {name:"Tim Jackson",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:0},
-  {name:"Tom Harding",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:1}
+  {name:"Tom Harding",goals:0,assists:0,yellow_cards:0,red_cards:0,sin_bin:0,motm:0,appearances:2}
 ];
 
 const matches = [
   {date:"13 Apr 2026",opposition:"Museum",score:"Lost 1-5",home_away:"Home",competition:"League",goals_for:1,goals_against:5},
   {date:"20 Apr 2026",opposition:"Northbank",score:"Lost 1-6",home_away:"Away",competition:"League",goals_for:1,goals_against:6},
-  {date:"27 Apr 2026",opposition:"Northbank",score:"TBD",home_away:"Away",competition:"County Cup",goals_for:null,goals_against:null},
+  {date:"27 Apr 2026",opposition:"Northbank",score:"Lost 1-5",home_away:"Away",competition:"County Cup",goals_for:1,goals_against:5},
+  {date:"5 May 2026",opposition:"Silloth",score:"TBD",home_away:"Away",competition:"League",goals_for:null,goals_against:null},
   {date:"5 May 2026",opposition:"Silloth",score:"TBD",home_away:"Away",competition:"League",goals_for:null,goals_against:null},
   {date:"11 May 2026",opposition:"AFC Carlisle",score:"TBD",home_away:"Home",competition:"League",goals_for:null,goals_against:null}
 ];
@@ -594,6 +595,12 @@ const matchData = {
     motm: "James Humphreys"
   },
   "27 Apr 2026": {
+    squad: ["Andy Reilly","Dave Martindale","Dean Metcalfe","Gary Jaques","James Humphreys","John Allinson","Jude Hodson","Lee Clarke","Llew Gibbs","Luke Sinclair","Marcel McLean","Paul Fraser","Ric Armstrong","Stu Forrester","Tom Harding"],
+    goalscorers: {"Paul Fraser":1},
+    assisters: {"Andy Reilly":1},
+    motm: "Luke Sinclair"
+  },
+  "5 May 2026": {
     squad: [],
     goalscorers: {},
     assisters: {},
