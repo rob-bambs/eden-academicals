@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -808,8 +809,20 @@ function renderMatchesList(){
       </div>
       ${compBadge(m.competition)}
       ${resultBadge(m)}
-      <button class="btn-secondary" style="padding:6px 14px;font-size:11px;white-space:nowrap;" onclick="openMatchEditor(${i})">Edit</button>
+      <div style="display:flex;gap:6px;">
+        <button class="btn-secondary" style="padding:6px 14px;font-size:11px;white-space:nowrap;" onclick="openMatchEditor(${i})">Edit</button>
+        <button class="btn-danger" style="padding:6px 10px;font-size:13px;line-height:1;" onclick="deleteMatch(${i})" title="Delete fixture">🗑</button>
+      </div>
     </div>`).join('');
+}
+
+function deleteMatch(idx){
+  const m=matches[idx];
+  if(!confirm(`Delete ${m.opposition} (${fmtDate(m.date)})?`)) return;
+  delete matchStats[m.id];
+  matches.splice(idx,1);
+  if(activeMatchId===m.id) activeMatchId=matches[0]?.id;
+  save(); renderMatchesList(); toast('✓ Fixture deleted');
 }
 
 function openMatchEditor(idx){
